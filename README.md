@@ -64,5 +64,6 @@ The diamond feature must be useable as a library and be used as a dependency in 
 
 ## extensions
 
+- Make use of the new nullable reference type of c#8.0 to clarify even more your intents and remove an entire category of bugs
 - Make the feature able to draw diamonds with numbers (beware of numbers composed of several digits)
 - output in a file instead of the console (think about a design decoupling the medium used to display and the feature by itself)
