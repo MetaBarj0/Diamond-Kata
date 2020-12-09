@@ -18,4 +18,9 @@ where letter is a valid uppercase or lowercase letter.");
     {
         public ForbiddenNullInputException(string message) : base(message) { }
     }
+
+    public class ForbiddenEmptyInputException : Exception
+    {
+        public ForbiddenEmptyInputException(string message) : base(message) { }
+    }
 }

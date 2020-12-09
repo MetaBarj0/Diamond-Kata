@@ -17,5 +17,15 @@ namespace Tests.Unit
                            .WithMessage(expectedWildcardPattern: "*null input*Usage:*",
                                         because: "A null input does not make sense");
         }
+
+        [Fact]
+        public void AnEmptyInputShouldAdviseUserWithUsageInformationAndAClearErrorMessage()
+        {
+            Action action = () => DiamondBuilder.MakeDiamondWith(string.Empty);
+
+            action.Should().ThrowExactly<ForbiddenEmptyInputException>()
+                           .WithMessage(expectedWildcardPattern: "*empty input*Usage:*",
+                                        because: "An empty input does not make sense");
+        }
     }
 }
