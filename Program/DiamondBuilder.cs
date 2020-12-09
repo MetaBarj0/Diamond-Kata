@@ -6,9 +6,14 @@ namespace Program
 {
     public class DiamondBuilder
     {
-        public static string MakeDiamondWith(object input)
+        public static string MakeDiamondWith(string input)
         {
-            throw new ForbiddenNullInputException(@"Making a diamond with a null input does not make sense!
+            if (input == null)
+                throw new ForbiddenNullInputException(@"Making a diamond with a null input does not make sense!
+Usage: diamond letter
+where letter is a valid uppercase or lowercase letter.");
+
+            throw new ForbiddenEmptyInputException(@"Making a diamond with an empty input does not make sense!
 Usage: diamond letter
 where letter is a valid uppercase or lowercase letter.");
         }
