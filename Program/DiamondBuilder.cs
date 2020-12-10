@@ -10,8 +10,17 @@ namespace Program
         {
             FailForInvalidInput(input);
 
-            return input;
+            char letter = input[0];
+
+            if (isA(letter))
+                return input;
+
+            return @" a 
+b b
+ a ";
         }
+
+        private static bool isA(char letter) => letter == 'a' || letter == 'A';
 
         private static void FailForInvalidInput(string input)
         {

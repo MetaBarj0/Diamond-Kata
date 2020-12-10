@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text;
 using FluentAssertions;
 using Program;
 using Xunit;
@@ -53,12 +55,26 @@ namespace Tests.Unit
         [Theory]
         [InlineData("A")]
         [InlineData("a")]
-        public void TheLetterAShouldOutputItself(string letter)
+        public void TheLetterAShouldOutputItself(string a)
         {
-            Func<string> action = () => DiamondBuilder.MakeDiamondWith(letter);
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith(a);
 
-            action.Should().NotThrow(because: $"{letter} is a valid input");
-            action.Invoke().Should().Be(letter, because: $"'{letter}' is the first letter of the alphabet and should output itself");
+            action.Should().NotThrow(because: $"{a} is a valid input");
+            action.Invoke().Should().Be(a, because: $"'{a}' is the first letter of the alphabet and should output itself");
+        }
+
+        [Fact]
+        public void TheLetterBShouldOutputADiamondContainingFromALetterToBLetter()
+        {
+            const string expected = @" a 
+b b
+ a ";
+
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith("b");
+
+            action.Should().NotThrow(because: "b is a valid input");
+
+            action.Invoke().Should().Be(expected);
         }
     }
 }
