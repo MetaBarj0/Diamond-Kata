@@ -8,6 +8,13 @@ namespace Program
     {
         public static string MakeDiamondWith(string input)
         {
+            FailForInvalidInput(input);
+
+            throw new NotImplementedException();
+        }
+
+        private static void FailForInvalidInput(string input)
+        {
             if (input == null)
                 FailForNullInput();
 
@@ -16,8 +23,6 @@ namespace Program
 
             if (isNotLetter(input))
                 FailForNonLetterInput();
-
-            throw new NotImplementedException();
         }
 
         private static void FailForNonLetterInput()
