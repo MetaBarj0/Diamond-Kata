@@ -16,14 +16,26 @@ namespace Program
             if (isA(letter))
                 return input;
 
-            const string DIAMOND = @" a 
+            string diamond = string.Empty;
+
+            if (isB(letter))
+                diamond = @" a 
 b b
  a ";
 
-            return char.IsLower(letter) ? DIAMOND : DIAMOND.ToUpper();
+            if (isC(letter))
+                diamond = @"  a  
+ b b 
+c   c
+ b b 
+  a  ";
+
+            return char.IsLower(letter) ? diamond : diamond.ToUpper();
         }
 
         private static bool isA(char letter) => letter == 'a' || letter == 'A';
+        private static bool isB(char letter) => letter == 'b' || letter == 'B';
+        private static bool isC(char letter) => letter == 'c' || letter == 'C';
 
         private static void FailForInvalidInput(string input)
         {
