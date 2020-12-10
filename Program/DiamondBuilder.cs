@@ -46,6 +46,20 @@ c   c
             return $"{letter}{string.Join(null, Enumerable.Repeat(' ', holeLength))}{letter}";
         }
 
+        public static IEnumerable<string> BuildBottomHalfDiamondWith(char letter)
+        {
+            var l = char.ToLower(letter);
+            var lRank = l - 'a';
+            var lineLength = 2 * lRank + 1;
+
+            for (; lRank >= 0; --lRank)
+            {
+                var line = BuildDiamondMiddleLineWith(letter--);
+                var padding = (lineLength - line.Length) / 2;
+                yield return $"{string.Join(null, Enumerable.Repeat(' ', padding))}{line}{string.Join(null, Enumerable.Repeat(' ', padding))}";
+            }
+        }
+
         private static bool IsA(char letter) => letter == 'a' || letter == 'A';
         private static bool IsB(char letter) => letter == 'b' || letter == 'B';
         private static bool IsC(char letter) => letter == 'c' || letter == 'C';
@@ -103,11 +117,6 @@ c   c
         private const string USAGE = @"
 Usage: diamond letter
 where letter is a valid uppercase or lowercase letter.";
-
-        public static IEnumerable<string> BuildBottomHalfDiamondWith(char a)
-        {
-            yield return $"{a}";
-        }
     }
 
     public class ForbiddenNullInputException : Exception

@@ -162,7 +162,41 @@ C   C
             Func<IEnumerable<string>> action = () => DiamondBuilder.BuildBottomHalfDiamondWith(a);
 
             // TODO - refacto Invoke calls
-            action.Invoke().Should().BeEquivalentTo(new [] { $"{a}" });
+            action.Invoke().Should().BeEquivalentTo(new[] { $"{a}" });
+        }
+
+        [Theory]
+        [InlineData('b')]
+        [InlineData('B')]
+        public void TheBLetterBuildABottomHalfDiamondThatHas2Lines(char b)
+        {
+            Func<IEnumerable<string>> action = () => DiamondBuilder.BuildBottomHalfDiamondWith(b);
+            var a = char.IsLower(b) ? 'a' : 'A';
+
+            // TODO - refacto Invoke calls
+            action.Invoke().Should().BeEquivalentTo(new[]
+            {
+                $"{b} {b}",
+                $" {a} "
+            });
+        }
+
+        [Theory]
+        [InlineData('c')]
+        [InlineData('C')]
+        public void TheCLetterBuildABottomHalfDiamondThatHas3Lines(char c)
+        {
+            Func<IEnumerable<string>> action = () => DiamondBuilder.BuildBottomHalfDiamondWith(c);
+            var a = char.IsLower(c) ? 'a' : 'A';
+            var b = char.IsLower(c) ? 'b' : 'B';
+
+            // TODO - refacto Invoke calls
+            action.Invoke().Should().BeEquivalentTo(new[]
+            {
+                $"{c}   {c}",
+                $" {b} {b} ",
+                $"  {a}  "
+            });
         }
     }
 }
