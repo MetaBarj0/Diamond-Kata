@@ -99,7 +99,7 @@ C   C
             action.Invoke().Should().Be(expected);
         }
 
-        // This test help us to find out an algorithm to build the diamond, it may be removed in future commits.
+        // Tests below help us to find out an algorithm to build the diamond, it may be removed in future commits.
         // If such test were not employed, you would have to 'guess' the algorithm to create the diamond in one time.
         // Once you're more experienced with TDD that's not an issue but as a learning exercise this approach is simpler
         [Theory]
@@ -130,6 +130,26 @@ C   C
             Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLine(c);
 
             action.Invoke().Should().Be($"{c}   {c}");
+        }
+
+        [Theory]
+        [InlineData('d')]
+        [InlineData('D')]
+        public void TheLetterDShouldGenerateDLine(char d)
+        {
+            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLine(d);
+
+            action.Invoke().Should().Be($"{d}     {d}");
+        }
+
+        [Theory]
+        [InlineData('x')]
+        [InlineData('X')]
+        public void TheLetterXShouldGenerateXLine(char x)
+        {
+            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLine(x);
+
+            action.Invoke().Should().Be($"{x}                                             {x}");
         }
     }
 }

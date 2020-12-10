@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Program
@@ -35,16 +36,14 @@ c   c
 
         public static string BuildDiamondMiddleLine(char letter)
         {
-            return letter switch
-            {
-                'a' => "a",
-                'A' => "A",
-                'b' => "b b",
-                'B' => "B B",
-                'c' => "c   c",
-                'C' => "C   C",
-                _ => string.Empty
-            };
+            var l = char.ToLower(letter);
+            var lRank = l - 'a';
+            var holeLength = lRank == 0 ? 0 : 2 * (lRank - 1) + 1;
+
+            if (holeLength == 0)
+                return $"{letter}";
+
+            return $"{letter}{string.Join(null, Enumerable.Repeat(' ', holeLength))}{letter}";
         }
 
         private static bool isA(char letter) => letter == 'a' || letter == 'A';
