@@ -60,7 +60,7 @@ namespace Tests.Unit
             Func<string> action = () => DiamondBuilder.MakeDiamondWith(a);
 
             action.Should().NotThrow(because: $"{a} is a valid input");
-            action.Invoke().Should().Be(a, because: $"'{a}' is the first letter of the alphabet and should output itself");
+            action().Should().Be(a, because: $"'{a}' is the first letter of the alphabet and should output itself");
         }
 
         [Theory]
@@ -76,7 +76,7 @@ B B
 
             action.Should().NotThrow(because: $"{letter} is a valid input");
 
-            action.Invoke().Should().Be(expected);
+            action().Should().Be(expected);
         }
 
         [Theory]
@@ -96,60 +96,7 @@ C   C
 
             action.Should().NotThrow(because: $"{letter} is a valid input");
 
-            action.Invoke().Should().Be(expected);
-        }
-
-        // Tests below help us to find out an algorithm to build the diamond, it may be removed in future commits.
-        // If such test were not employed, you would have to 'guess' the algorithm to create the diamond in one time.
-        // Once you're more experienced with TDD that's not an issue but as a learning exercise this approach is simpler
-        [Theory]
-        [InlineData('a')]
-        [InlineData('A')]
-        public void TheLetterAShouldGenerateItself(char a)
-        {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(a);
-
-            action.Invoke().Should().Be($"{a}");
-        }
-
-        [Theory]
-        [InlineData('b')]
-        [InlineData('B')]
-        public void TheLetterBShouldGenerateBLine(char c)
-        {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(c);
-
-            action.Invoke().Should().Be($"{c} {c}");
-        }
-
-        [Theory]
-        [InlineData('c')]
-        [InlineData('C')]
-        public void TheLetterCShouldGenerateCLine(char c)
-        {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(c);
-
-            action.Invoke().Should().Be($"{c}   {c}");
-        }
-
-        [Theory]
-        [InlineData('d')]
-        [InlineData('D')]
-        public void TheLetterDShouldGenerateDLine(char d)
-        {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(d);
-
-            action.Invoke().Should().Be($"{d}     {d}");
-        }
-
-        [Theory]
-        [InlineData('x')]
-        [InlineData('X')]
-        public void TheLetterXShouldGenerateXLine(char x)
-        {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(x);
-
-            action.Invoke().Should().Be($"{x}                                             {x}");
+            action().Should().Be(expected);
         }
 
         // Tests helping us in splitting the diamond creation algorithm in manageable parts
@@ -159,10 +106,9 @@ C   C
         [InlineData('A')]
         public void TheALetterBuildABottomHalfDiamondThatIsOnlyTheALetter(char a)
         {
-            Func<IEnumerable<string>> action = () => DiamondBuilder.BuildBottomHalfDiamondWith(a);
+            IEnumerable<string> action() => DiamondBuilder.BuildBottomHalfDiamondWith(a);
 
-            // TODO - refacto Invoke calls
-            action.Invoke().Should().BeEquivalentTo(new[] { $"{a}" });
+            action().Should().BeEquivalentTo(new[] { $"{a}" });
         }
 
         [Theory]
@@ -170,11 +116,10 @@ C   C
         [InlineData('B')]
         public void TheBLetterBuildABottomHalfDiamondThatHas2Lines(char b)
         {
-            Func<IEnumerable<string>> action = () => DiamondBuilder.BuildBottomHalfDiamondWith(b);
+            IEnumerable<string> action() => DiamondBuilder.BuildBottomHalfDiamondWith(b);
             var a = char.IsLower(b) ? 'a' : 'A';
 
-            // TODO - refacto Invoke calls
-            action.Invoke().Should().BeEquivalentTo(new[]
+            action().Should().BeEquivalentTo(new[]
             {
                 $"{b} {b}",
                 $" {a} "
@@ -186,12 +131,11 @@ C   C
         [InlineData('C')]
         public void TheCLetterBuildABottomHalfDiamondThatHas3Lines(char c)
         {
-            Func<IEnumerable<string>> action = () => DiamondBuilder.BuildBottomHalfDiamondWith(c);
+            IEnumerable<string> action() => DiamondBuilder.BuildBottomHalfDiamondWith(c);
             var a = char.IsLower(c) ? 'a' : 'A';
             var b = char.IsLower(c) ? 'b' : 'B';
 
-            // TODO - refacto Invoke calls
-            action.Invoke().Should().BeEquivalentTo(new[]
+            action().Should().BeEquivalentTo(new[]
             {
                 $"{c}   {c}",
                 $" {b} {b} ",

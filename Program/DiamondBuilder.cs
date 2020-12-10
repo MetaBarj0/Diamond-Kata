@@ -34,30 +34,37 @@ c   c
             return char.IsLower(letter) ? diamond : diamond.ToUpper();
         }
 
-        public static string BuildDiamondMiddleLineWith(char letter)
-        {
-            var l = char.ToLower(letter);
-            var lRank = l - 'a';
-            var holeLength = lRank == 0 ? 0 : 2 * (lRank - 1) + 1;
-
-            if (holeLength == 0)
-                return $"{letter}";
-
-            return $"{letter}{string.Join(null, Enumerable.Repeat(' ', holeLength))}{letter}";
-        }
-
         public static IEnumerable<string> BuildBottomHalfDiamondWith(char letter)
         {
-            var l = char.ToLower(letter);
-            var lRank = l - 'a';
+            int lRank = ComputeLetterRank(letter);
             var lineLength = 2 * lRank + 1;
 
             for (; lRank >= 0; --lRank)
             {
                 var line = BuildDiamondMiddleLineWith(letter--);
                 var padding = (lineLength - line.Length) / 2;
-                yield return $"{string.Join(null, Enumerable.Repeat(' ', padding))}{line}{string.Join(null, Enumerable.Repeat(' ', padding))}";
+
+                yield return $"{RepeatChar(' ', padding)}{line}{RepeatChar(' ', padding)}";
             }
+        }
+
+        private static string BuildDiamondMiddleLineWith(char letter)
+        {
+            var lRank = ComputeLetterRank(letter);
+            var holeLength = lRank == 0 ? 0 : 2 * (lRank - 1) + 1;
+
+            if (holeLength == 0)
+                return $"{letter}";
+
+            return $"{letter}{RepeatChar(' ', holeLength)}{letter}";
+        }
+
+        private static int ComputeLetterRank(char letter)
+        {
+            var l = char.ToLower(letter);
+            var lRank = l - 'a';
+
+            return lRank;
         }
 
         private static bool IsA(char letter) => letter == 'a' || letter == 'A';
@@ -102,6 +109,11 @@ c   c
             messageBuilder.Append(USAGE);
 
             throw new ForbiddenNullInputException(messageBuilder.ToString());
+        }
+
+        private static string RepeatChar(char c, int n)
+        {
+            return string.Join(null, Enumerable.Repeat(c, n));
         }
 
         private static void FailForEmptyInput()
