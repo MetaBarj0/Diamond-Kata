@@ -64,7 +64,7 @@ namespace Tests.Unit
         }
 
         [Fact]
-        public void TheLetterBShouldOutputADiamondContainingFromALetterToBLetter()
+        public void TheLowercaseLetterBShouldOutputADiamondContainingFromALetterToBLetterAllLowercase()
         {
             const string expected = @" a 
 b b
@@ -73,6 +73,20 @@ b b
             Func<string> action = () => DiamondBuilder.MakeDiamondWith("b");
 
             action.Should().NotThrow(because: "b is a valid input");
+
+            action.Invoke().Should().Be(expected);
+        }
+
+        [Fact]
+        public void TheUppercaseLetterBShouldOutputADiamondContainingFromALetterToBLetterAllUppercase()
+        {
+            const string expected = @" A 
+B B
+ A ";
+
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith("B");
+
+            action.Should().NotThrow(because: "B is a valid input");
 
             action.Invoke().Should().Be(expected);
         }
