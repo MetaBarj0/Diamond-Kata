@@ -10,7 +10,7 @@ namespace Program
         {
             FailForInvalidInput(input);
 
-            throw new NotImplementedException();
+            return "A";
         }
 
         private static void FailForInvalidInput(string input)

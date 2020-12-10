@@ -46,5 +46,14 @@ namespace Tests.Unit
                            .WithMessage(expectedWildcardPattern: "*only with a single letter*Usage:*",
                                         because: "Anything else that letter is not supported");
         }
+
+        [Fact]
+        public void TheLetterAShouldOutputItself()
+        {
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith("A");
+
+            action.Should().NotThrow(because: "'A' is a valid input");
+            action.Invoke().Should().Be("A", because: "'A' is the first letter of the alphabet and should output itself");
+        }
     }
 }
