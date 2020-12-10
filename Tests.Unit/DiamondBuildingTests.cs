@@ -31,6 +31,9 @@ namespace Tests.Unit
         [Theory]
         [InlineData(" ")]
         [InlineData("_")]
+        [InlineData("\n")]
+        [InlineData("\r")]
+        [InlineData("\r\n")]
         [InlineData("1")]
         [InlineData("I'm not one letter")]
         [InlineData("Aa\r")]
@@ -47,22 +50,15 @@ namespace Tests.Unit
                                         because: "Anything else that letter is not supported");
         }
 
-        [Fact]
-        public void TheUppercaseLetterAShouldOutputItself()
+        [Theory]
+        [InlineData("A")]
+        [InlineData("a")]
+        public void TheLetterAShouldOutputItself(string letter)
         {
-            Func<string> action = () => DiamondBuilder.MakeDiamondWith("A");
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith(letter);
 
-            action.Should().NotThrow(because: "'A' is a valid input");
-            action.Invoke().Should().Be("A", because: "'A' is the first letter of the alphabet and should output itself");
-        }
-
-        [Fact]
-        public void TheLowercaseLetterAShouldOutputItself()
-        {
-            Func<string> action = () => DiamondBuilder.MakeDiamondWith("a");
-
-            action.Should().NotThrow(because: "'a' is a valid input");
-            action.Invoke().Should().Be("a", because: "'a' is the first letter of the alphabet and should output itself");
+            action.Should().NotThrow(because: $"{letter} is a valid input");
+            action.Invoke().Should().Be(letter, because: $"'{letter}' is the first letter of the alphabet and should output itself");
         }
     }
 }
