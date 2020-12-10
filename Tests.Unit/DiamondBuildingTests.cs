@@ -63,30 +63,38 @@ namespace Tests.Unit
             action.Invoke().Should().Be(a, because: $"'{a}' is the first letter of the alphabet and should output itself");
         }
 
-        [Fact]
-        public void TheLowercaseLetterBShouldOutputADiamondContainingFromALetterToBLetterAllLowercase()
-        {
-            const string expected = @" a 
+        [Theory]
+        [InlineData("b", @" a 
 b b
- a ";
+ a ")]
+        [InlineData("B", @" A 
+B B
+ A ")]
+        public void TheLetterBShouldOutputADiamondContainingFromALetterToBLetter(string letter, string expected)
+        {
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith(letter);
 
-            Func<string> action = () => DiamondBuilder.MakeDiamondWith("b");
-
-            action.Should().NotThrow(because: "b is a valid input");
+            action.Should().NotThrow(because: $"{letter} is a valid input");
 
             action.Invoke().Should().Be(expected);
         }
 
-        [Fact]
-        public void TheUppercaseLetterBShouldOutputADiamondContainingFromALetterToBLetterAllUppercase()
+        [Theory]
+        [InlineData("c", @"  a  
+ b b 
+c   c
+ b b 
+  a  ")]
+        [InlineData("C", @"  A  
+ B B 
+C   C
+ B B 
+  A  ")]
+        public void TheLetterCShouldOutputADiamondContainingFromALetterToCLetter(string letter, string expected)
         {
-            const string expected = @" A 
-B B
- A ";
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith(letter);
 
-            Func<string> action = () => DiamondBuilder.MakeDiamondWith("B");
-
-            action.Should().NotThrow(because: "B is a valid input");
+            action.Should().NotThrow(because: $"{letter} is a valid input");
 
             action.Invoke().Should().Be(expected);
         }
