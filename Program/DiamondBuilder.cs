@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Program
@@ -15,9 +16,11 @@ namespace Program
             if (isA(letter))
                 return input;
 
-            return @" a 
+            const string DIAMOND = @" a 
 b b
  a ";
+
+            return char.IsLower(letter) ? DIAMOND : DIAMOND.ToUpper();
         }
 
         private static bool isA(char letter) => letter == 'a' || letter == 'A';
