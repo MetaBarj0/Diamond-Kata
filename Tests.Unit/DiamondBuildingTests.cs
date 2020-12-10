@@ -107,7 +107,7 @@ C   C
         [InlineData('A')]
         public void TheLetterAShouldGenerateItself(char a)
         {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLine(a);
+            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(a);
 
             action.Invoke().Should().Be($"{a}");
         }
@@ -117,7 +117,7 @@ C   C
         [InlineData('B')]
         public void TheLetterBShouldGenerateBLine(char c)
         {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLine(c);
+            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(c);
 
             action.Invoke().Should().Be($"{c} {c}");
         }
@@ -127,7 +127,7 @@ C   C
         [InlineData('C')]
         public void TheLetterCShouldGenerateCLine(char c)
         {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLine(c);
+            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(c);
 
             action.Invoke().Should().Be($"{c}   {c}");
         }
@@ -137,7 +137,7 @@ C   C
         [InlineData('D')]
         public void TheLetterDShouldGenerateDLine(char d)
         {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLine(d);
+            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(d);
 
             action.Invoke().Should().Be($"{d}     {d}");
         }
@@ -147,9 +147,22 @@ C   C
         [InlineData('X')]
         public void TheLetterXShouldGenerateXLine(char x)
         {
-            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLine(x);
+            Func<string> action = () => DiamondBuilder.BuildDiamondMiddleLineWith(x);
 
             action.Invoke().Should().Be($"{x}                                             {x}");
+        }
+
+        // Tests helping us in splitting the diamond creation algorithm in manageable parts
+        // Those tests and covered code may discard previous tests
+        [Theory]
+        [InlineData('a')]
+        [InlineData('A')]
+        public void TheALetterBuildABottomHalfDiamondThatIsOnlyTheALetter(char a)
+        {
+            Func<IEnumerable<string>> action = () => DiamondBuilder.BuildBottomHalfDiamondWith(a);
+
+            // TODO - refacto Invoke calls
+            action.Invoke().Should().BeEquivalentTo(new [] { $"{a}" });
         }
     }
 }

@@ -14,17 +14,17 @@ namespace Program
 
             char letter = input[0];
 
-            if (isA(letter))
+            if (IsA(letter))
                 return input;
 
             string diamond = string.Empty;
 
-            if (isB(letter))
+            if (IsB(letter))
                 diamond = @" a 
 b b
  a ";
 
-            if (isC(letter))
+            if (IsC(letter))
                 diamond = @"  a  
  b b 
 c   c
@@ -34,7 +34,7 @@ c   c
             return char.IsLower(letter) ? diamond : diamond.ToUpper();
         }
 
-        public static string BuildDiamondMiddleLine(char letter)
+        public static string BuildDiamondMiddleLineWith(char letter)
         {
             var l = char.ToLower(letter);
             var lRank = l - 'a';
@@ -46,9 +46,9 @@ c   c
             return $"{letter}{string.Join(null, Enumerable.Repeat(' ', holeLength))}{letter}";
         }
 
-        private static bool isA(char letter) => letter == 'a' || letter == 'A';
-        private static bool isB(char letter) => letter == 'b' || letter == 'B';
-        private static bool isC(char letter) => letter == 'c' || letter == 'C';
+        private static bool IsA(char letter) => letter == 'a' || letter == 'A';
+        private static bool IsB(char letter) => letter == 'b' || letter == 'B';
+        private static bool IsC(char letter) => letter == 'c' || letter == 'C';
 
         private static void FailForInvalidInput(string input)
         {
@@ -58,7 +58,7 @@ c   c
             if (input == string.Empty)
                 FailForEmptyInput();
 
-            if (isNotLetter(input))
+            if (IsNotLetter(input))
                 FailForNonLetterInput();
         }
 
@@ -72,7 +72,7 @@ c   c
             throw new ForbiddenNonLetterInputException(messageBuilder.ToString());
         }
 
-        private static bool isNotLetter(string input)
+        private static bool IsNotLetter(string input)
         {
             if (input.Length > 1)
                 return true;
@@ -103,6 +103,11 @@ c   c
         private const string USAGE = @"
 Usage: diamond letter
 where letter is a valid uppercase or lowercase letter.";
+
+        public static IEnumerable<string> BuildBottomHalfDiamondWith(char a)
+        {
+            yield return $"{a}";
+        }
     }
 
     public class ForbiddenNullInputException : Exception
