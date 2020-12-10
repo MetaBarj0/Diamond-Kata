@@ -35,7 +35,16 @@ c   c
 
         public static string BuildDiamondMiddleLine(char letter)
         {
-            return $"{letter}";
+            return letter switch
+            {
+                'a' => "a",
+                'A' => "A",
+                'b' => "b b",
+                'B' => "B B",
+                'c' => "c   c",
+                'C' => "C   C",
+                _ => string.Empty
+            };
         }
 
         private static bool isA(char letter) => letter == 'a' || letter == 'A';
