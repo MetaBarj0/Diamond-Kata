@@ -27,5 +27,15 @@ namespace Tests.Unit
                            .WithMessage(expectedWildcardPattern: "*empty input*Usage:*",
                                         because: "An empty input does not make sense");
         }
+
+        [Fact]
+        public void ANonLetterInputShouldAdviseUserWithUsageInformationAndAClearErrorMessage()
+        {
+            Action action = () => DiamondBuilder.MakeDiamondWith(" ");
+
+            action.Should().ThrowExactly<ForbiddenNonLetterInputException>()
+                           .WithMessage(expectedWildcardPattern: "*only with a single letter*Usage:*",
+                                        because: "Anything else that letter is not supported");
+        }
     }
 }

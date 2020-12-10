@@ -11,9 +11,31 @@ namespace Program
             if (input == null)
                 FailForNullInput();
 
-            FailForEmptyInput();
+            if (input == string.Empty)
+                FailForEmptyInput();
+
+            if (isNotLetter(input))
+                FailForNonLetterInput();
 
             throw new NotImplementedException();
+        }
+
+        private static void FailForNonLetterInput()
+        {
+            StringBuilder messageBuilder = new StringBuilder();
+
+            messageBuilder.AppendLine("You can create a diamond only with a single letter!");
+            messageBuilder.Append(USAGE);
+
+            throw new ForbiddenNonLetterInputException(messageBuilder.ToString());
+        }
+
+        private static bool isNotLetter(string input)
+        {
+            if (input.Length > 1)
+                return false;
+
+            return !Char.IsLetter(input[0]);
         }
 
         private static void FailForNullInput()
@@ -21,9 +43,7 @@ namespace Program
             StringBuilder messageBuilder = new StringBuilder();
 
             messageBuilder.AppendLine("Making a diamond with a null input does not make sense!");
-            messageBuilder.Append(@"
-Usage: diamond letter
-where letter is a valid uppercase or lowercase letter.");
+            messageBuilder.Append(USAGE);
 
             throw new ForbiddenNullInputException(messageBuilder.ToString());
         }
@@ -51,5 +71,10 @@ where letter is a valid uppercase or lowercase letter.";
     public class ForbiddenEmptyInputException : Exception
     {
         public ForbiddenEmptyInputException(string message) : base(message) { }
+    }
+
+    public class ForbiddenNonLetterInputException : Exception
+    {
+        public ForbiddenNonLetterInputException(string message) : base(message) { }
     }
 }
