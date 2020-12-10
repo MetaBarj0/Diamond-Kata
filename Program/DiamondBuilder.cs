@@ -10,7 +10,7 @@ namespace Program
         {
             FailForInvalidInput(input);
 
-            return "A";
+            return input;
         }
 
         private static void FailForInvalidInput(string input)

@@ -48,12 +48,21 @@ namespace Tests.Unit
         }
 
         [Fact]
-        public void TheLetterAShouldOutputItself()
+        public void TheUppercaseLetterAShouldOutputItself()
         {
             Func<string> action = () => DiamondBuilder.MakeDiamondWith("A");
 
             action.Should().NotThrow(because: "'A' is a valid input");
             action.Invoke().Should().Be("A", because: "'A' is the first letter of the alphabet and should output itself");
+        }
+
+        [Fact]
+        public void TheLowercaseLetterAShouldOutputItself()
+        {
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith("a");
+
+            action.Should().NotThrow(because: "'a' is a valid input");
+            action.Invoke().Should().Be("a", because: "'a' is the first letter of the alphabet and should output itself");
         }
     }
 }
