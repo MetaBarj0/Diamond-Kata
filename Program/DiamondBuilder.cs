@@ -33,6 +33,11 @@ c   c
             return char.IsLower(letter) ? diamond : diamond.ToUpper();
         }
 
+        public static string BuildDiamondMiddleLine(char letter)
+        {
+            return $"{letter}";
+        }
+
         private static bool isA(char letter) => letter == 'a' || letter == 'A';
         private static bool isB(char letter) => letter == 'b' || letter == 'B';
         private static bool isC(char letter) => letter == 'c' || letter == 'C';
