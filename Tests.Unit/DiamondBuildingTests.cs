@@ -28,10 +28,19 @@ namespace Tests.Unit
                                         because: "An empty input does not make sense");
         }
 
-        [Fact]
-        public void ANonLetterInputShouldAdviseUserWithUsageInformationAndAClearErrorMessage()
+        [Theory]
+        [InlineData(" ")]
+        [InlineData("_")]
+        [InlineData("1")]
+        [InlineData("I'm not one letter")]
+        [InlineData("Aa\r")]
+        [InlineData("\0")]
+        [InlineData("\t")]
+        [InlineData("\v")]
+        [InlineData("A\n")]
+        public void ANonLetterInputShouldAdviseUserWithUsageInformationAndAClearErrorMessage(string input)
         {
-            Action action = () => DiamondBuilder.MakeDiamondWith(" ");
+            Action action = () => DiamondBuilder.MakeDiamondWith(input);
 
             action.Should().ThrowExactly<ForbiddenNonLetterInputException>()
                            .WithMessage(expectedWildcardPattern: "*only with a single letter*Usage:*",

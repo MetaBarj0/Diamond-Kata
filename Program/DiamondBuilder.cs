@@ -38,7 +38,7 @@ namespace Program
         private static bool isNotLetter(string input)
         {
             if (input.Length > 1)
-                return false;
+                return true;
 
             return !Char.IsLetter(input[0]);
         }
