@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
 using FluentAssertions;
 using Program;
 using Xunit;
@@ -64,12 +61,12 @@ namespace Tests.Unit
         }
 
         [Theory]
-        [InlineData("b", @" a 
+        [InlineData("b", @" a
 b b
- a ")]
-        [InlineData("B", @" A 
+ a")]
+        [InlineData("B", @" A
 B B
- A ")]
+ A")]
         public void TheLetterBShouldOutputADiamondContainingFromALetterToBLetter(string letter, string expected)
         {
             Func<string> action = () => DiamondBuilder.MakeDiamondWith(letter);
@@ -80,115 +77,70 @@ B B
         }
 
         [Theory]
-        [InlineData("c", @"  a  
- b b 
+        [InlineData("c", @"  a
+ b b
 c   c
- b b 
-  a  ")]
-        [InlineData("C", @"  A  
- B B 
+ b b
+  a")]
+        [InlineData("C", @"  A
+ B B
 C   C
- B B 
-  A  ")]
-        [InlineData("x", @"                       a                       
-                      b b                      
-                     c   c                     
-                    d     d                    
-                   e       e                   
-                  f         f                  
-                 g           g                 
-                h             h                
-               i               i               
-              j                 j              
-             k                   k             
-            l                     l            
-           m                       m           
-          n                         n          
-         o                           o         
-        p                             p        
-       q                               q       
-      r                                 r      
-     s                                   s     
-    t                                     t    
-   u                                       u   
-  v                                         v  
- w                                           w 
+ B B
+  A")]
+        [InlineData("x", @"                       a
+                      b b
+                     c   c
+                    d     d
+                   e       e
+                  f         f
+                 g           g
+                h             h
+               i               i
+              j                 j
+             k                   k
+            l                     l
+           m                       m
+          n                         n
+         o                           o
+        p                             p
+       q                               q
+      r                                 r
+     s                                   s
+    t                                     t
+   u                                       u
+  v                                         v
+ w                                           w
 x                                             x
- w                                           w 
-  v                                         v  
-   u                                       u   
-    t                                     t    
-     s                                   s     
-      r                                 r      
-       q                               q       
-        p                             p        
-         o                           o         
-          n                         n          
-           m                       m           
-            l                     l            
-             k                   k             
-              j                 j              
-               i               i               
-                h             h                
-                 g           g                 
-                  f         f                  
-                   e       e                   
-                    d     d                    
-                     c   c                     
-                      b b                      
-                       a                       ")]
-        public void TheLetterCShouldOutputADiamondContainingFromALetterToCLetter(string letter, string expected)
+ w                                           w
+  v                                         v
+   u                                       u
+    t                                     t
+     s                                   s
+      r                                 r
+       q                               q
+        p                             p
+         o                           o
+          n                         n
+           m                       m
+            l                     l
+             k                   k
+              j                 j
+               i               i
+                h             h
+                 g           g
+                  f         f
+                   e       e
+                    d     d
+                     c   c
+                      b b
+                       a")]
+        public void AnyLetterShouldOutputADiamondContainingFromALetterToSpecifiedLetter(string letter, string expected)
         {
             Func<string> action = () => DiamondBuilder.MakeDiamondWith(letter);
 
             action.Should().NotThrow(because: $"{letter} is a valid input");
 
             action().Should().Be(expected);
-        }
-
-        // Tests helping us in splitting the diamond creation algorithm in manageable parts
-        // Those tests may be discarded in future commits as the only serve to discover a working algorithm
-        // this is the inside out approach
-        [Theory]
-        [InlineData('a')]
-        [InlineData('A')]
-        public void TheALetterBuildABottomHalfDiamondThatIsOnlyTheALetter(char a)
-        {
-            IEnumerable<string> action() => DiamondBuilder.BuildBottomHalfDiamondWith(a);
-
-            action().Should().BeEquivalentTo(new[] { $"{a}" });
-        }
-
-        [Theory]
-        [InlineData('b')]
-        [InlineData('B')]
-        public void TheBLetterBuildABottomHalfDiamondThatHas2Lines(char b)
-        {
-            IEnumerable<string> action() => DiamondBuilder.BuildBottomHalfDiamondWith(b);
-            var a = char.IsLower(b) ? 'a' : 'A';
-
-            action().Should().BeEquivalentTo(new[]
-            {
-                $"{b} {b}",
-                $" {a} "
-            });
-        }
-
-        [Theory]
-        [InlineData('c')]
-        [InlineData('C')]
-        public void TheCLetterBuildABottomHalfDiamondThatHas3Lines(char c)
-        {
-            IEnumerable<string> action() => DiamondBuilder.BuildBottomHalfDiamondWith(c);
-            var a = char.IsLower(c) ? 'a' : 'A';
-            var b = char.IsLower(c) ? 'b' : 'B';
-
-            action().Should().BeEquivalentTo(new[]
-            {
-                $"{c}   {c}",
-                $" {b} {b} ",
-                $"  {a}  "
-            });
         }
     }
 }

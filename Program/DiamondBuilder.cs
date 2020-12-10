@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -24,7 +23,7 @@ namespace Program
 
         private static IEnumerable<string> MirrorBottomHalfDiamond(IEnumerable<string> bottomHalfDiamond) => bottomHalfDiamond.Skip(1).Reverse();
 
-        public static IEnumerable<string> BuildBottomHalfDiamondWith(char letter)
+        private static IEnumerable<string> BuildBottomHalfDiamondWith(char letter)
         {
             int lRank = ComputeLetterRank(letter);
             var lineLength = 2 * lRank + 1;
@@ -34,7 +33,7 @@ namespace Program
                 var line = BuildDiamondMiddleLineWith(letter--);
                 var padding = (lineLength - line.Length) / 2;
 
-                yield return $"{RepeatChar(' ', padding)}{line}{RepeatChar(' ', padding)}";
+                yield return $"{RepeatChar(' ', padding)}{line}";
             }
         }
 
@@ -56,10 +55,6 @@ namespace Program
 
             return lRank;
         }
-
-        private static bool IsA(char letter) => letter == 'a' || letter == 'A';
-        private static bool IsB(char letter) => letter == 'b' || letter == 'B';
-        private static bool IsC(char letter) => letter == 'c' || letter == 'C';
 
         private static void FailForInvalidInput(string input)
         {
@@ -101,10 +96,8 @@ namespace Program
             throw new ForbiddenNullInputException(messageBuilder.ToString());
         }
 
-        private static string RepeatChar(char c, int n)
-        {
-            return string.Join(null, Enumerable.Repeat(c, n));
-        }
+        private static string RepeatChar(char c, int n) => string.Join(null, Enumerable.Repeat(c, n));
+
 
         private static void FailForEmptyInput()
         {
