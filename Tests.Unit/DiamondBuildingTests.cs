@@ -90,6 +90,53 @@ c   c
 C   C
  B B 
   A  ")]
+        [InlineData("x", @"                       a                       
+                      b b                      
+                     c   c                     
+                    d     d                    
+                   e       e                   
+                  f         f                  
+                 g           g                 
+                h             h                
+               i               i               
+              j                 j              
+             k                   k             
+            l                     l            
+           m                       m           
+          n                         n          
+         o                           o         
+        p                             p        
+       q                               q       
+      r                                 r      
+     s                                   s     
+    t                                     t    
+   u                                       u   
+  v                                         v  
+ w                                           w 
+x                                             x
+ w                                           w 
+  v                                         v  
+   u                                       u   
+    t                                     t    
+     s                                   s     
+      r                                 r      
+       q                               q       
+        p                             p        
+         o                           o         
+          n                         n          
+           m                       m           
+            l                     l            
+             k                   k             
+              j                 j              
+               i               i               
+                h             h                
+                 g           g                 
+                  f         f                  
+                   e       e                   
+                    d     d                    
+                     c   c                     
+                      b b                      
+                       a                       ")]
         public void TheLetterCShouldOutputADiamondContainingFromALetterToCLetter(string letter, string expected)
         {
             Func<string> action = () => DiamondBuilder.MakeDiamondWith(letter);
@@ -100,7 +147,8 @@ C   C
         }
 
         // Tests helping us in splitting the diamond creation algorithm in manageable parts
-        // Those tests and covered code may discard previous tests
+        // Those tests may be discarded in future commits as the only serve to discover a working algorithm
+        // this is the inside out approach
         [Theory]
         [InlineData('a')]
         [InlineData('A')]

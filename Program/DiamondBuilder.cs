@@ -14,25 +14,15 @@ namespace Program
 
             char letter = input[0];
 
-            if (IsA(letter))
-                return input;
+            var bottomHalfDiamond = BuildBottomHalfDiamondWith(letter);
+            var topHalfDiamond = MirrorBottomHalfDiamond(bottomHalfDiamond);
 
-            string diamond = string.Empty;
-
-            if (IsB(letter))
-                diamond = @" a 
-b b
- a ";
-
-            if (IsC(letter))
-                diamond = @"  a  
- b b 
-c   c
- b b 
-  a  ";
+            var diamond = string.Join(Environment.NewLine, topHalfDiamond.Concat(bottomHalfDiamond));
 
             return char.IsLower(letter) ? diamond : diamond.ToUpper();
         }
+
+        private static IEnumerable<string> MirrorBottomHalfDiamond(IEnumerable<string> bottomHalfDiamond) => bottomHalfDiamond.Skip(1).Reverse();
 
         public static IEnumerable<string> BuildBottomHalfDiamondWith(char letter)
         {
