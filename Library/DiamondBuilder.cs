@@ -61,7 +61,7 @@ namespace Library
             if (input == string.Empty)
                 FailForEmptyInput();
 
-            if (IsNotLetterNorDigit(input))
+            if (IsNotLetterNorPositiveInteger(input))
                 FailForNonLetterNorDigitInput();
         }
 
@@ -75,9 +75,9 @@ namespace Library
             throw new ForbiddenNonLetterNorDigitInputException(messageBuilder.ToString());
         }
 
-        private static bool IsNotLetterNorDigit(string input)
+        private static bool IsNotLetterNorPositiveInteger(string input)
         {
-            if (input.Length > 1)
+            if (input.Length > 1 && !uint.TryParse(input, out uint _))
                 return true;
 
             return !Char.IsLetterOrDigit(input[0]);
