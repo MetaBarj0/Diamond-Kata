@@ -61,26 +61,26 @@ namespace Library
             if (input == string.Empty)
                 FailForEmptyInput();
 
-            if (IsNotLetter(input))
-                FailForNonLetterInput();
+            if (IsNotLetterNorDigit(input))
+                FailForNonLetterNorDigitInput();
         }
 
-        private static void FailForNonLetterInput()
+        private static void FailForNonLetterNorDigitInput()
         {
             StringBuilder messageBuilder = new StringBuilder();
 
-            messageBuilder.AppendLine("You can create a diamond only with a single letter!");
+            messageBuilder.AppendLine("You can create a diamond only with a single letter or a single digit!");
             messageBuilder.Append(USAGE);
 
-            throw new ForbiddenNonLetterInputException(messageBuilder.ToString());
+            throw new ForbiddenNonLetterNorDigitInputException(messageBuilder.ToString());
         }
 
-        private static bool IsNotLetter(string input)
+        private static bool IsNotLetterNorDigit(string input)
         {
             if (input.Length > 1)
                 return true;
 
-            return !Char.IsLetter(input[0]);
+            return !Char.IsLetterOrDigit(input[0]);
         }
 
         private static string RepeatChar(char c, int n) => string.Join(null, Enumerable.Repeat(c, n));
@@ -97,8 +97,8 @@ namespace Library
         }
 
         private const string USAGE = @"
-Usage: diamond letter
-where letter is a valid uppercase or lowercase letter.";
+Usage: diamond (letter|digit)
+where letter is a valid uppercase or lowercase letter and digit, a valid digit between 0 and 9.";
     }
 
     public class ForbiddenEmptyInputException : Exception
@@ -106,8 +106,8 @@ where letter is a valid uppercase or lowercase letter.";
         public ForbiddenEmptyInputException(string message) : base(message) { }
     }
 
-    public class ForbiddenNonLetterInputException : Exception
+    public class ForbiddenNonLetterNorDigitInputException : Exception
     {
-        public ForbiddenNonLetterInputException(string message) : base(message) { }
+        public ForbiddenNonLetterNorDigitInputException(string message) : base(message) { }
     }
 }

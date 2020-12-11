@@ -23,7 +23,6 @@ namespace Tests.Unit
         [InlineData("\n")]
         [InlineData("\r")]
         [InlineData("\r\n")]
-        [InlineData("1")]
         [InlineData("I'm not one letter")]
         [InlineData("Aa\r")]
         [InlineData("\0")]
@@ -34,9 +33,9 @@ namespace Tests.Unit
         {
             Action action = () => DiamondBuilder.MakeDiamondWith(input);
 
-            action.Should().ThrowExactly<ForbiddenNonLetterInputException>()
-                           .WithMessage(expectedWildcardPattern: "*only with a single letter*Usage:*",
-                                        because: "Anything else that letter is not supported");
+            action.Should().ThrowExactly<ForbiddenNonLetterNorDigitInputException>()
+                           .WithMessage(expectedWildcardPattern: "*only with a single letter*single digit*Usage:*",
+                                        because: "Anything else that letter and digit is not supported");
         }
 
         [Theory]
@@ -131,6 +130,14 @@ x                                             x
             action.Should().NotThrow(because: $"{letter} is a valid input");
 
             action().Should().Be(expected);
+        }
+
+        [Fact]
+        public void The0DigitShouldOutputItself()
+        {
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith("0");
+
+            action.Should().NotThrow();
         }
     }
 }
