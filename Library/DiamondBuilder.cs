@@ -58,9 +58,6 @@ namespace Library
 
         private static void FailForInvalidInput(string input)
         {
-            if (input == null)
-                FailForNullInput();
-
             if (input == string.Empty)
                 FailForEmptyInput();
 
@@ -86,16 +83,6 @@ namespace Library
             return !Char.IsLetter(input[0]);
         }
 
-        private static void FailForNullInput()
-        {
-            StringBuilder messageBuilder = new StringBuilder();
-
-            messageBuilder.AppendLine("Making a diamond with a null input does not make sense!");
-            messageBuilder.Append(USAGE);
-
-            throw new ForbiddenNullInputException(messageBuilder.ToString());
-        }
-
         private static string RepeatChar(char c, int n) => string.Join(null, Enumerable.Repeat(c, n));
 
 
@@ -112,11 +99,6 @@ namespace Library
         private const string USAGE = @"
 Usage: diamond letter
 where letter is a valid uppercase or lowercase letter.";
-    }
-
-    public class ForbiddenNullInputException : Exception
-    {
-        public ForbiddenNullInputException(string message) : base(message) { }
     }
 
     public class ForbiddenEmptyInputException : Exception
