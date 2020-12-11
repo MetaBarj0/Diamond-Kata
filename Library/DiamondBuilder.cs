@@ -11,14 +11,26 @@ namespace Library
         {
             FailForInvalidInput(input);
 
-            char c = input[0];
+            if (input.Length > 1)
+            {
+                uint.TryParse(input, out uint n);
 
-            var bottomHalfDiamond = BuildBottomHalfDiamondWith(c);
-            var topHalfDiamond = MirrorBottomHalfDiamond(bottomHalfDiamond);
+                var bottomHalfDiamond = BuildBottomHalfDiamondWith(n);
+                var topHalfDiamond = MirrorBottomHalfDiamond(bottomHalfDiamond);
 
-            var diamond = string.Join(Environment.NewLine, topHalfDiamond.Concat(bottomHalfDiamond));
+                return string.Join(Environment.NewLine, topHalfDiamond.Concat(bottomHalfDiamond));
+            }
+            else
+            {
+                char c = input[0];
 
-            return char.IsLower(c) ? diamond : diamond.ToUpper();
+                var bottomHalfDiamond = BuildBottomHalfDiamondWith(c);
+                var topHalfDiamond = MirrorBottomHalfDiamond(bottomHalfDiamond);
+
+                var diamond = string.Join(Environment.NewLine, topHalfDiamond.Concat(bottomHalfDiamond));
+
+                return char.IsLower(c) ? diamond : diamond.ToUpper();
+            }
         }
 
         private static IEnumerable<string> MirrorBottomHalfDiamond(IEnumerable<string> bottomHalfDiamond) => bottomHalfDiamond.Skip(1).Reverse();
@@ -37,6 +49,19 @@ namespace Library
             }
         }
 
+        private static IEnumerable<string> BuildBottomHalfDiamondWith(uint n)
+        {
+            var lineLength = 2 * n + 1;
+
+            for (uint i = n + 1; i > 0; --i)
+            {
+                var line = BuildDiamondMiddleLineWith(n--);
+                var padding = (lineLength - line.Length) / 2;
+
+                yield return $"{RepeatChar(' ', (int)padding)}{line}";
+            }
+        }
+
         private static string BuildDiamondMiddleLineWith(char letter)
         {
             var lRank = ComputeCharacterRank(letter);
@@ -46,6 +71,16 @@ namespace Library
                 return $"{letter}";
 
             return $"{letter}{RepeatChar(' ', holeLength)}{letter}";
+        }
+
+        private static string BuildDiamondMiddleLineWith(uint n)
+        {
+            var holeLength = n == 0 ? 0 : 2 * (n - 1) + 1 - (2 * $"{n}".Length - 2);
+
+            if (holeLength == 0)
+                return $"{n}";
+
+            return $"{n}{RepeatChar(' ', (int)holeLength)}{n}";
         }
 
         private static int ComputeCharacterRank(char c)
@@ -62,17 +97,17 @@ namespace Library
                 FailForEmptyInput();
 
             if (IsNotLetterNorPositiveInteger(input))
-                FailForNonLetterNorDigitInput();
+                FailForNonLetterNorPositiveIntegerInput();
         }
 
-        private static void FailForNonLetterNorDigitInput()
+        private static void FailForNonLetterNorPositiveIntegerInput()
         {
             StringBuilder messageBuilder = new StringBuilder();
 
-            messageBuilder.AppendLine("You can create a diamond only with a single letter or a single digit!");
+            messageBuilder.AppendLine("You can create a diamond only with a single letter or a positive integer!");
             messageBuilder.Append(USAGE);
 
-            throw new ForbiddenNonLetterNorDigitInputException(messageBuilder.ToString());
+            throw new ForbiddenNonLetterNorPositiveIntegerInputException(messageBuilder.ToString());
         }
 
         private static bool IsNotLetterNorPositiveInteger(string input)
@@ -97,8 +132,8 @@ namespace Library
         }
 
         private const string USAGE = @"
-Usage: diamond (letter|digit)
-where letter is a valid uppercase or lowercase letter and digit, a valid digit between 0 and 9.";
+Usage: diamond (letter|positive integer)
+where letter is a valid uppercase or lowercase letter and digit, a positive integer.";
     }
 
     public class ForbiddenEmptyInputException : Exception
@@ -106,8 +141,8 @@ where letter is a valid uppercase or lowercase letter and digit, a valid digit b
         public ForbiddenEmptyInputException(string message) : base(message) { }
     }
 
-    public class ForbiddenNonLetterNorDigitInputException : Exception
+    public class ForbiddenNonLetterNorPositiveIntegerInputException : Exception
     {
-        public ForbiddenNonLetterNorDigitInputException(string message) : base(message) { }
+        public ForbiddenNonLetterNorPositiveIntegerInputException(string message) : base(message) { }
     }
 }
