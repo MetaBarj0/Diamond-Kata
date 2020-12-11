@@ -1,6 +1,6 @@
 using System;
 using FluentAssertions;
-using Program;
+using Library;
 using Xunit;
 
 namespace Tests.Unit

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Program
+namespace Library
 {
     public class DiamondBuilder
     {
