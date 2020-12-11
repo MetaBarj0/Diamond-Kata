@@ -11,26 +11,26 @@ namespace Library
         {
             FailForInvalidInput(input);
 
-            char letter = input[0];
+            char c = input[0];
 
-            var bottomHalfDiamond = BuildBottomHalfDiamondWith(letter);
+            var bottomHalfDiamond = BuildBottomHalfDiamondWith(c);
             var topHalfDiamond = MirrorBottomHalfDiamond(bottomHalfDiamond);
 
             var diamond = string.Join(Environment.NewLine, topHalfDiamond.Concat(bottomHalfDiamond));
 
-            return char.IsLower(letter) ? diamond : diamond.ToUpper();
+            return char.IsLower(c) ? diamond : diamond.ToUpper();
         }
 
         private static IEnumerable<string> MirrorBottomHalfDiamond(IEnumerable<string> bottomHalfDiamond) => bottomHalfDiamond.Skip(1).Reverse();
 
-        private static IEnumerable<string> BuildBottomHalfDiamondWith(char letter)
+        private static IEnumerable<string> BuildBottomHalfDiamondWith(char c)
         {
-            int lRank = ComputeLetterRank(letter);
+            int lRank = ComputeCharacterRank(c);
             var lineLength = 2 * lRank + 1;
 
             for (; lRank >= 0; --lRank)
             {
-                var line = BuildDiamondMiddleLineWith(letter--);
+                var line = BuildDiamondMiddleLineWith(c--);
                 var padding = (lineLength - line.Length) / 2;
 
                 yield return $"{RepeatChar(' ', padding)}{line}";
@@ -39,7 +39,7 @@ namespace Library
 
         private static string BuildDiamondMiddleLineWith(char letter)
         {
-            var lRank = ComputeLetterRank(letter);
+            var lRank = ComputeCharacterRank(letter);
             var holeLength = lRank == 0 ? 0 : 2 * (lRank - 1) + 1;
 
             if (holeLength == 0)
@@ -48,12 +48,12 @@ namespace Library
             return $"{letter}{RepeatChar(' ', holeLength)}{letter}";
         }
 
-        private static int ComputeLetterRank(char letter)
+        private static int ComputeCharacterRank(char c)
         {
-            var l = char.ToLower(letter);
-            var lRank = l - 'a';
+            if (char.IsDigit(c))
+                return c - '0';
 
-            return lRank;
+            return char.ToLower(c) - 'a';
         }
 
         private static void FailForInvalidInput(string input)
