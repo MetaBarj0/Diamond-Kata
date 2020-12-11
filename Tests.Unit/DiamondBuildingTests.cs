@@ -29,6 +29,9 @@ namespace Tests.Unit
         [InlineData("\t")]
         [InlineData("\v")]
         [InlineData("A\n")]
+        [InlineData("-0")]
+        [InlineData("-1")]
+        [InlineData("-10")]
         public void ANonLetterInputShouldAdviseUserWithUsageInformationAndAClearErrorMessage(string input)
         {
             Action action = () => DiamondBuilder.MakeDiamondWith(input);
@@ -133,11 +136,11 @@ x                                             x
         }
 
         [Theory]
-        [InlineData("0","0")]
-        [InlineData("1",@" 0
+        [InlineData("0", "0")]
+        [InlineData("1", @" 0
 1 1
  0")]
-        [InlineData("9",@"         0
+        [InlineData("9", @"         0
         1 1
        2   2
       3     3
@@ -162,6 +165,15 @@ x                                             x
 
             action.Should().NotThrow();
             action().Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData("11", @"")]
+        public void ValidPositiveIntegerDrawADiamond(string number, string expected)
+        {
+            Func<string> action = () => DiamondBuilder.MakeDiamondWith(number);
+
+            action.Should().NotThrow();
         }
     }
 }
