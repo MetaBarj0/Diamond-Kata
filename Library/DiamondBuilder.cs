@@ -93,7 +93,7 @@ namespace Library
             if (holeLength == 0)
                 return $"{x}";
 
-            return $"{x}{RepeatChar(' ', (int)holeLength)}{x}";
+            return $"{x}{RepeatChar(' ', holeLength)}{x}";
         }
 
         private static int ComputeCharacterRank(char c) => char.ToLower(c) - 'a';
