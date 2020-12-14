@@ -31,7 +31,9 @@ namespace Library
             var bottomHalfDiamond = BuildRawBottomHalfDiamond(input);
             var topHalfDiamond = MirrorBottomHalfDiamond(bottomHalfDiamond);
 
-            return string.Join(Environment.NewLine, topHalfDiamond.Concat(bottomHalfDiamond));
+            var diamond = from line in topHalfDiamond.Concat(bottomHalfDiamond) select line;
+
+            return new StringBuilder().AppendJoin(Environment.NewLine, diamond).ToString();
         }
 
         private static IEnumerable<string> BuildRawBottomHalfDiamond<T>(T input) where T : notnull
