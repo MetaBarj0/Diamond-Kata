@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Library
 {
-    public class DiamondBuilder
+    public static class DiamondBuilder
     {
         public static string MakeDiamondWith(string input)
         {
@@ -28,7 +28,7 @@ namespace Library
 
         private static string BuildRawDiamond<T>(T input) where T : notnull
         {
-            var bottomHalfDiamond = BuildRawBottomHalfDiamond(input);
+            var bottomHalfDiamond = BuildRawBottomHalfDiamond(input).ToArray();
             var topHalfDiamond = MirrorBottomHalfDiamond(bottomHalfDiamond);
 
             var diamond = from line in topHalfDiamond.Concat(bottomHalfDiamond) select line;
@@ -111,7 +111,7 @@ namespace Library
         {
             StringBuilder messageBuilder = new StringBuilder()
             .AppendLine("You can create a diamond only with a single letter or a positive integer!")
-            .Append(USAGE);
+            .Append(Usage);
 
             throw new ForbiddenNonLetterNorPositiveIntegerInputException(messageBuilder.ToString());
         }
@@ -131,12 +131,12 @@ namespace Library
         {
             StringBuilder messageBuilder = new StringBuilder()
             .AppendLine("Making a diamond with an empty input does not make sense!")
-            .Append(USAGE);
+            .Append(Usage);
 
             throw new ForbiddenEmptyInputException(messageBuilder.ToString());
         }
 
-        private const string USAGE = @"
+        private const string Usage = @"
 Usage: diamond (letter|positive integer)
 where letter is a valid uppercase or lowercase letter and digit, a positive integer.";
     }

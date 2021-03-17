@@ -3,9 +3,9 @@ using Library;
 
 namespace Program
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var input = args.Length == 0 ? string.Empty : args[0];
 
